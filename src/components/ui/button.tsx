@@ -2,10 +2,6 @@ import React from "react";
 import { cva, VariantProps } from "cva";
 import { cn } from "@/lib/utils";
 
-interface ButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
-    VariantProps<typeof buttonVariants> {}
-
 const buttonVariants = cva({
   base: "rounded-sm",
   variants: {
@@ -23,16 +19,21 @@ const buttonVariants = cva({
   },
 });
 
-const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, intent, ...props }, ref) => {
-    return (
-      <button
-        ref={ref}
-        className={cn(buttonVariants({ intent }), className)}
-        {...props}
-      />
-    );
-  },
-);
+interface ButtonProps
+  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
+    VariantProps<typeof buttonVariants> {
+  ref?: React.RefObject<HTMLButtonElement>;
+  className?: string;
+}
+
+const Button = ({ ref, className, intent, size, ...props }: ButtonProps) => {
+  return (
+    <button
+      ref={ref}
+      className={cn(buttonVariants({ intent, size }), className)}
+      {...props}
+    />
+  );
+};
 
 export default Button;
