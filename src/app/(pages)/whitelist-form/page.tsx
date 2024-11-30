@@ -10,7 +10,7 @@ const WhitelistForm = () => {
           {mockQuestions.map((question) => (
             <div key={question.id}>
               <label className="text-white">{question.question}</label>
-              <input type="text" className="w-full rounded bg-zinc-900 p-2" />
+              <input type="text" className="w-full rounded bg-zinc-900 p-2" placeholder={question.placeholder} />
             </div>
           ))}
 
