@@ -1,5 +1,4 @@
 import { mockQuestions } from "@/lib/mock";
-import React from "react";
 
 const WhitelistForm = () => {
   return (
@@ -10,7 +9,14 @@ const WhitelistForm = () => {
           {mockQuestions.map((question) => (
             <div key={question.id}>
               <label className="text-white">{question.question}</label>
-              <input type="text" className="w-full rounded bg-zinc-900 p-2" />
+              <textarea
+                name={question.id}
+                id={question.id}
+                required={question.required}
+                placeholder={question.placeholder}
+                maxLength={250}
+                className="w-full rounded bg-zinc-900 p-2"
+              />
             </div>
           ))}
 
