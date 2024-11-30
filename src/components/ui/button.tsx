@@ -19,21 +19,15 @@ const buttonVariants = cva({
   },
 });
 
-interface ButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
-    VariantProps<typeof buttonVariants> {
-  ref?: React.RefObject<HTMLButtonElement>;
+type ButtonVariantsType = VariantProps<typeof buttonVariants>;
+
+interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement>, ButtonVariantsType {
+  ref?: React.RefObject<HTMLButtonElement & ButtonVariantsType>;
   className?: string;
 }
 
 const Button = ({ ref, className, intent, size, ...props }: ButtonProps) => {
-  return (
-    <button
-      ref={ref}
-      className={cn(buttonVariants({ intent, size }), className)}
-      {...props}
-    />
-  );
+  return <button ref={ref} className={cn(buttonVariants({ intent, size }), className)} {...props} />;
 };
 
 export default Button;
