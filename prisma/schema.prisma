@@ -13,6 +13,29 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Admin {
-  id String @id
+model WhitelistQuestion {
+  id        String   @id @default(cuid())
+  question  String
+  required  Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("whitelist_questions")
+}
+
+model WhitelistApplication {
+  id        String   @id @default(cuid())
+  applicant String   @unique
+  status    Status   @default(pending)
+  answers   Json
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("whitelist_applications")
+}
+
+enum Status {
+  pending
+  accepted
+  rejected
 }
