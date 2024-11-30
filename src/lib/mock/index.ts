@@ -1,6 +1,6 @@
 import { Question } from "../types";
 
-export default [
+export const mockQuestions: Question[] = [
   {
     id: "1",
     question: "What is your name?",
@@ -13,4 +13,4 @@ export default [
     id: "3",
     question: "What is your age?",
   },
-] satisfies Question[];
+];
