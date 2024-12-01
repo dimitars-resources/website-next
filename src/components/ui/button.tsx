@@ -10,6 +10,7 @@ const buttonVariants = cva({
       secondary: "bg-white text-gray-800 hover:bg-gray-100",
     },
     size: {
+      small: "py-1 px-2 text-sm",
       base: "py-2 px-4",
     },
   },
