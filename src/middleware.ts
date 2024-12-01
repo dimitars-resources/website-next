@@ -7,7 +7,10 @@ export const config = {
 
 export default auth((req) => {
   const reqUrl = new URL(req.url);
-  if (!req.auth && reqUrl?.pathname !== "/") {
+
+  const allowedPaths = ["/", "/about"];
+
+  if (!req.auth && !allowedPaths.includes(reqUrl.pathname)) {
     return NextResponse.redirect(new URL("/", req.url));
   }
 });
