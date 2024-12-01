@@ -1,7 +1,7 @@
 "use server";
 
 import { redirect } from "next/navigation";
-import { signIn, auth } from "./auth";
+import { auth, signIn, signOut } from "./auth";
 
 export async function signInAction() {
   const session = await auth();
@@ -11,4 +11,8 @@ export async function signInAction() {
   } else {
     redirect("/whitelist-form");
   }
+}
+
+export async function signOutAction() {
+  await signOut({ redirectTo: "/" });
 }
