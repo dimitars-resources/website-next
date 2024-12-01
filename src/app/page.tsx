@@ -14,7 +14,7 @@ export default function Home() {
           reprehenderit laborum.
         </p>
         <form action={signInAction}>
-          <Button type="submit" className="rounded-sm bg-blue-800 px-4 py-2">
+          <Button type="submit">
             Apply Now!
           </Button>
         </form>
