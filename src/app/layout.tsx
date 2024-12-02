@@ -37,7 +37,7 @@ export default function RootLayout({
         )}
       >
         <Header />
-        <main className="min-h-screen flex-grow p-4 pt-16">
+        <main className="min-h-screen flex-grow pt-16">
           <div className="mx-auto max-w-7xl">{children}</div>
         </main>
         <Footer />

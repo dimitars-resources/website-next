@@ -13,6 +13,7 @@ const Header = async () => {
         <div className="space-x-4 *:text-xl">
           <Link href="/">Home</Link>
           <Link href="/about">About</Link>
+          <Link href="/dashboard">Dashboard</Link>
         </div>
 
         {session?.user && (
