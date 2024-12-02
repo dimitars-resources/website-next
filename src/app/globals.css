@@ -19,10 +19,10 @@ body {
   }
 
   ::-webkit-scrollbar-track {
-    @apply bg-[#111111] py-px;
+    @apply bg-background py-px;
   }
 
   ::-webkit-scrollbar-thumb {
-    @apply rounded-full border-4 border-solid border-[#111111] bg-zinc-600;
+    @apply rounded-full border-4 border-solid border-background bg-zinc-800;
   }
 }

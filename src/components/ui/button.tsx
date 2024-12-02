@@ -6,7 +6,7 @@ const buttonVariants = cva({
   base: "rounded-sm",
   variants: {
     intent: {
-      primary: "bg-blue-800 hover:bg-blue-900",
+      primary: "bg-blue-600 hover:bg-blue-700",
       secondary: "bg-white text-gray-800 hover:bg-gray-100",
     },
     size: {
