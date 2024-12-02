@@ -33,7 +33,7 @@ export default function RootLayout({
         className={cn(
           geistSans.variable,
           geistMono.variable,
-          "container mx-auto h-screen font-[family-name:var(--font-geist-sans)] antialiased",
+          "h-screen font-[family-name:var(--font-geist-sans)] antialiased",
         )}
       >
         <Header />
