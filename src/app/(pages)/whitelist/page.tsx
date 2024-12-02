@@ -24,18 +24,19 @@ const WhitelistForm = () => {
       <form onSubmit={handleSubmit} className="space-y-6">
         {mockQuestions.map((question) => {
           const textareaRef = useAutoResizeTextarea();
+
           return (
             <div key={question.id} className="space-y-2">
               <label htmlFor={question.id} className="text-lg font-medium">
                 {question.question} {question.required && <span className="text-red-500">*</span>}
               </label>
+
               <Textarea
                 id={question.id}
                 placeholder={question.placeholder}
                 required={question.required}
                 value={answers[question.question] || ""}
                 onChange={(e) => handleChange(question.question, e.target.value)}
-                className="w-full"
                 ref={textareaRef}
               />
             </div>
