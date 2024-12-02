@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 :root {
-  --background: #0a0a0a;
+  --background: #08090a;
   --foreground: #ededed;
 }
 
@@ -23,6 +23,6 @@ body {
   }
 
   ::-webkit-scrollbar-thumb {
-    @apply rounded-full border-4 border-solid border-background bg-zinc-800;
+    @apply rounded-full border-4 border-solid border-background bg-white/30;
   }
 }
