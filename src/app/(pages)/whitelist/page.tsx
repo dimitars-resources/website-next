@@ -21,6 +21,7 @@ const WhitelistForm = () => {
   return (
     <div className="container mx-auto px-4 py-8">
       <h1 className="mb-6 text-3xl font-bold">Whitelist Application</h1>
+
       <form onSubmit={handleSubmit} className="space-y-6">
         {mockQuestions.map((question) => {
           const textareaRef = useAutoResizeTextarea();
@@ -42,9 +43,10 @@ const WhitelistForm = () => {
             </div>
           );
         })}
-        <Button type="submit" className="w-full">
-          Submit Application
-        </Button>
+
+        <div className="flex justify-end pt-10">
+          <Button type="submit">Submit</Button>
+        </div>
       </form>
     </div>
   );

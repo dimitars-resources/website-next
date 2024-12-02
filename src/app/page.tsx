@@ -5,7 +5,7 @@ import { signInAction } from "@/lib/actions";
 
 export default function Home() {
   return (
-    <div className="my-44 space-y-44">
+    <div className="my-44 space-y-44 p-4">
       <section className="flex flex-col items-center space-y-8 text-center">
         <h1 className="text-7xl font-bold">Server Name</h1>
         <p className="w-full max-w-2xl">
