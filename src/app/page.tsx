@@ -1,5 +1,4 @@
-import Button from "@/components/ui/button";
-import { signInAction } from "@/lib/actions";
+import SignIn from "@/components/sign-in";
 
 export default function Home() {
   return (
@@ -11,9 +10,8 @@ export default function Home() {
           ratione cumque maiores eaque rerum totam reiciendis saepe, repellat excepturi dignissimos omnis expedita dicta
           reprehenderit laborum.
         </p>
-        <form action={signInAction}>
-          <Button type="submit">Apply Now!</Button>
-        </form>
+
+        <SignIn />
       </section>
     </div>
   );
