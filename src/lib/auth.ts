@@ -1,5 +1,6 @@
 import NextAuth from "next-auth";
 import Discord from "next-auth/providers/discord";
+import { isAdmin } from "./utils";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [
@@ -23,6 +24,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     },
     async session({ session, token, user }) {
       session.user.id = token.id;
+      session.user.isAdmin = await isAdmin(token.id);
       return session;
     },
   },

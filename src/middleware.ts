@@ -9,8 +9,17 @@ export default auth((req) => {
   const reqUrl = new URL(req.url);
 
   const allowedPaths = ["/", "/about"];
+  const adminPaths = ["/dashboard"];
 
-  if (!req.auth && !allowedPaths.includes(reqUrl.pathname)) {
-    return NextResponse.redirect(new URL("/", req.url));
+  if (!req.auth) {
+    if (!allowedPaths.includes(reqUrl.pathname)) {
+      return NextResponse.redirect(new URL("/", req.url));
+    }
+  } else {
+    if (adminPaths.includes(reqUrl.pathname)) {
+      if (!req.auth?.user.isAdmin === true) {
+        return NextResponse.redirect(new URL("/", req.url));
+      }
+    }
   }
 });
