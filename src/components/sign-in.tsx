@@ -7,6 +7,7 @@ import { signIn } from "next-auth/react";
 const SignIn = () => {
   return (
     <Button
+      rounded="full"
       onClick={async () => {
         console.log("Sign in with Discord");
         try {
@@ -16,7 +17,7 @@ const SignIn = () => {
         }
       }}
     >
-      Apply Now!
+      Apply Now
     </Button>
   );
 };

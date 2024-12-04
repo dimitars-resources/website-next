@@ -48,7 +48,9 @@ const WhitelistForm = () => {
         })}
 
         <div className="flex justify-end pt-10">
-          <Button type="submit">Submit</Button>
+          <Button type="submit" rounded="full">
+            Submit
+          </Button>
         </div>
       </form>
     </div>
