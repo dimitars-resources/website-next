@@ -33,7 +33,6 @@ const Header = async () => {
         <div className="space-x-6">
           {tabs.map((tab) => {
             if (hasPermission(tab)) return null;
-
             return (
               <Link key={tab.name} href={tab.href}>
                 {tab.name}
@@ -43,9 +42,7 @@ const Header = async () => {
         </div>
 
         {session?.user && (
-          <>
-            <UserProfile image={session.user.image} />
-          </>
+          <UserProfile image={session.user.image} username={session.user.name} isAdmin={session.user.isAdmin} />
         )}
       </nav>
     </header>
