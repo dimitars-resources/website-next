@@ -12,7 +12,7 @@ const UserProfile = ({ image, username, isAdmin }: UserProfileProps) => {
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <Image src={image} alt="Profile" width={40} height={40} className="rounded-full" />
+        <Image src={image} alt="Profile" width={40} height={40} className="cursor-pointer rounded-full" />
       </PopoverTrigger>
 
       <PopoverContent align="end" className="mt-1 w-40 rounded-sm p-1">
