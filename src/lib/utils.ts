@@ -5,23 +5,27 @@ export const cn = (...inputs: ClassValue[]) => {
   return twMerge(clsx(inputs));
 };
 
-export const isAdmin = async (userID: string | unknown): Promise<boolean> => {
-  let isAdmin = false;
-
+export const isAdmin = async (userId: string): Promise<boolean> => {
   try {
-    const response = await fetch(`https://discord.com/api/guilds/${process.env.DISCORD_GUILD_ID}/members/${userID}`, {
-      headers: {
-        Authorization: `Bot ${process.env.DISCORD_BOT_TOKEN}`,
+    const response = await fetch(
+      `https://discord.com/api/guilds/${process.env.AUTH_DISCORD_GUILD_ID}/members/${userId}`,
+      {
+        headers: {
+          Authorization: `Bot ${process.env.AUTH_DISCORD_BOT_TOKEN}`,
+        },
       },
-    });
+    );
 
-    if (response.ok) {
-      const data = await response.json();
-      const userRoles = data.roles;
-
-      isAdmin = userRoles.includes(process.env.DISCORD_ADMIN_ROLE_ID);
+    if (!response.ok) {
+      return false;
     }
-  } catch (error) {}
 
-  return isAdmin;
+    const data = await response.json();
+    const isAdmin = data.roles.includes(process.env.AUTH_DISCORD_ADMIN_ROLE_ID);
+
+    return isAdmin;
+  } catch (error) {
+    console.error("Error checking admin status:", error);
+    return false;
+  }
 };

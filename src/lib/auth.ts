@@ -20,11 +20,13 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         token.accessToken = account.access_token;
         token.id = profile?.id;
       }
+
       return token;
     },
     async session({ session, token, user }) {
       session.user.id = token.id;
-      session.user.isAdmin = await isAdmin(token.id);
+      session.user.isAdmin = await isAdmin(token.id as string);
+
       return session;
     },
   },
