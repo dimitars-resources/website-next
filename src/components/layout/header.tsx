@@ -15,7 +15,7 @@ const Header = async () => {
   const session = await auth();
 
   return (
-    <header className="fixed top-0 z-10 h-16 w-full border-b border-white/5 bg-background">
+    <header className="fixed top-0 h-16 w-full border-b border-white/5 bg-background">
       <nav className="mx-auto flex h-full max-w-7xl items-center justify-between px-4">
         <div className="space-x-6">
           {tabs.map((tab) => {
