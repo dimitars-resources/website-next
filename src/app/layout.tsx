@@ -33,7 +33,7 @@ export default function RootLayout({
         className={cn(
           geistSans.variable,
           geistMono.variable,
-          "flex min-h-screen flex-col font-[family-name:var(--font-geist-sans)] antialiased",
+          "flex min-h-screen flex-col font-[family-name:var(--font-geist-sans)] antialiased selection:bg-primary",
         )}
       >
         <Header />
