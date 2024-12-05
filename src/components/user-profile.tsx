@@ -25,9 +25,9 @@ const UserProfile = ({ image, username, isAdmin }: UserProfileProps) => {
           </div>
           <button
             type="submit"
-            className="w-full rounded bg-black/40 px-3 py-1.5 text-right text-red-500 outline-none hover:bg-black/60"
+            className="w-full rounded bg-black/40 px-3 py-1.5 text-right text-red-500 outline-none hover:bg-red-600 hover:text-white"
           >
-            Sign out
+            Sign Out
           </button>
         </form>
       </PopoverContent>
