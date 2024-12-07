@@ -1,17 +1,44 @@
 "use client";
 
 import { useState } from "react";
+import { z } from "zod";
 import Button from "@/components/ui/button";
 import { mockQuestions } from "@/lib/mock";
 import { Textarea } from "@/components/ui/textarea";
 
+const createSchema = () => {
+  const schemaObj: Record<string, any> = {};
+  mockQuestions.forEach((question) => {
+    schemaObj[question.question] = question.required
+      ? z.string().min(1, { message: "This field is required." })
+      : z.string().optional();
+  });
+  return z.object(schemaObj);
+};
+
 const WhitelistForm = () => {
   const [answers, setAnswers] = useState<Record<string, string>>({});
+  const [errors, setErrors] = useState<Record<string, string>>({});
+
   const sortedQuestions = mockQuestions.sort((a, b) => (a.required === b.required ? 0 : a.required ? -1 : 1));
+  const schema = createSchema();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Submitted answers:", answers);
+
+    const result = schema.safeParse(answers);
+
+    if (!result.success) {
+      const validationErrors: Record<string, string> = {};
+      result.error.errors.forEach((err) => {
+        if (err.path[0]) validationErrors[err.path[0] as string] = err.message;
+      });
+      setErrors(validationErrors);
+      return;
+    }
+
+    setErrors({});
+    console.log("Validated answers:", result.data);
   };
 
   const handleChange = (question: string, value: string) => {
@@ -38,6 +65,7 @@ const WhitelistForm = () => {
                 onChange={(e) => handleChange(question.question, e.target.value)}
                 className="resize-none"
               />
+              {errors[question.question] && <p className="text-sm text-red-500">{errors[question.question]}</p>}
             </div>
           );
         })}
