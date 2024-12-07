@@ -4,11 +4,9 @@ import { useState } from "react";
 import Button from "@/components/ui/button";
 import { mockQuestions } from "@/lib/mock";
 import { Textarea } from "@/components/ui/textarea";
-import useAutoResizeTextarea from "@/lib/hooks/useAutoResizeTextarea";
 
 const WhitelistForm = () => {
   const [answers, setAnswers] = useState<Record<string, string>>({});
-
   const sortedQuestions = mockQuestions.sort((a, b) => (a.required === b.required ? 0 : a.required ? -1 : 1));
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -26,8 +24,6 @@ const WhitelistForm = () => {
 
       <form onSubmit={handleSubmit} className="space-y-6">
         {sortedQuestions.map((question) => {
-          const textareaRef = useAutoResizeTextarea();
-
           return (
             <div key={question.id} className="space-y-2">
               <label htmlFor={question.id} className="text-lg font-medium">
@@ -40,7 +36,6 @@ const WhitelistForm = () => {
                 required={question.required}
                 value={answers[question.question] || ""}
                 onChange={(e) => handleChange(question.question, e.target.value)}
-                ref={textareaRef}
                 className="resize-none"
               />
             </div>

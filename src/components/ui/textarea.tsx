@@ -1,12 +1,11 @@
 import * as React from "react";
 
 import { cn } from "@/lib/utils";
+import useAutoResizeTextarea from "@/lib/hooks/useAutoResizeTextarea";
 
-interface TextareaProps extends React.ComponentPropsWithoutRef<"textarea"> {
-  ref?: React.RefObject<HTMLTextAreaElement>;
-}
+const Textarea = ({ className, ...props }: React.ComponentPropsWithoutRef<"textarea">) => {
+  const ref = useAutoResizeTextarea();
 
-const Textarea = ({ ref, className, ...props }: TextareaProps) => {
   return (
     <textarea
       className={cn(
