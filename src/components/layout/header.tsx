@@ -39,7 +39,7 @@ const Header = async () => {
         </div>
 
         {session?.user && (
-          <UserProfile image={session.user.image} username={session.user.name} isAdmin={session.user.isAdmin} />
+          <UserProfile image={session.user.image} name={session.user.name} isAdmin={session.user.isAdmin} />
         )}
       </nav>
     </header>

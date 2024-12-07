@@ -4,11 +4,11 @@ import { signOutAction } from "@/lib/actions";
 
 interface UserProfileProps {
   image: string;
-  username: string;
+  name: string;
   isAdmin?: boolean;
 }
 
-const UserProfile = ({ image, username, isAdmin }: UserProfileProps) => {
+const UserProfile = ({ image, name, isAdmin }: UserProfileProps) => {
   return (
     <Popover>
       <PopoverTrigger asChild>
@@ -20,7 +20,7 @@ const UserProfile = ({ image, username, isAdmin }: UserProfileProps) => {
           <div className="p-1 text-gray-400">
             <p>Logged is as</p>
             <p>
-              {username} <span className="text-yellow-500 opacity-100">{isAdmin && "(Admin)"}</span>
+              {name} <span className="text-yellow-500 opacity-100">{isAdmin && "(Admin)"}</span>
             </p>
           </div>
           <button
