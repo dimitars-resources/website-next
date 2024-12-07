@@ -40,7 +40,7 @@ export default function RootLayout({
         <main className="h-screen min-h-screen flex-grow pt-16">
           <div className="mx-auto h-full max-w-7xl">{children}</div>
         </main>
-        <Footer />
+        {/* <Footer /> */}
       </body>
     </html>
   );
