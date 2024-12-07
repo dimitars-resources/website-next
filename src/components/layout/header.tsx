@@ -1,8 +1,5 @@
 import Link from "next/link";
-import Image from "next/image";
-import Button from "../ui/button";
 import { auth } from "@/lib/auth";
-import { signOutAction } from "@/lib/actions";
 import UserProfile from "../user-profile";
 
 const tabs = [
