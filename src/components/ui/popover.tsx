@@ -10,7 +10,7 @@ const PopoverTrigger = PopoverPrimitive.Trigger;
 const PopoverAnchor = PopoverPrimitive.Anchor;
 
 interface PopoverContentProps extends React.ComponentPropsWithoutRef<typeof PopoverPrimitive.Content> {
-  ref: React.RefObject<React.ComponentRef<typeof PopoverPrimitive.Content>>;
+  ref?: React.RefObject<React.ComponentRef<typeof PopoverPrimitive.Content>>;
 }
 
 const PopoverContent = ({ ref, className, align = "center", sideOffset = 4, ...props }: PopoverContentProps) => (

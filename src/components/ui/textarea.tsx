@@ -3,7 +3,7 @@ import * as React from "react";
 import { cn } from "@/lib/utils";
 
 interface TextareaProps extends React.ComponentPropsWithoutRef<"textarea"> {
-  ref: React.RefObject<HTMLTextAreaElement>;
+  ref?: React.RefObject<HTMLTextAreaElement>;
 }
 
 const Textarea = ({ ref, className, ...props }: TextareaProps) => {
