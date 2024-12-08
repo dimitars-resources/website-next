@@ -33,14 +33,16 @@ export default function RootLayout({
         className={cn(
           geistSans.variable,
           geistMono.variable,
-          "flex min-h-screen flex-col font-[family-name:var(--font-geist-sans)] antialiased selection:bg-primary",
+          "font-[family-name:var(--font-geist-sans)] antialiased selection:bg-primary",
         )}
       >
         <Header />
-        <main className="h-screen min-h-screen flex-grow pt-16">
-          <div className="mx-auto h-full max-w-7xl">{children}</div>
+        <main className="mt-16 flex min-h-[calc(100vh-4rem)]">
+          <div className="w-full">
+            <div className="mx-auto h-full w-full max-w-7xl">{children}</div>
+          </div>
         </main>
-        {/* <Footer /> */}
+        <Footer />
       </body>
     </html>
   );
