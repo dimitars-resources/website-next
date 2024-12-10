@@ -3,6 +3,7 @@
 import { redirect } from "next/navigation";
 import { auth, signIn, signOut } from "./auth";
 import prisma from "./db";
+import { Question } from "./types";
 
 export async function signInAction() {
   const session = await auth();
@@ -35,6 +36,29 @@ export async function createWhitelistApplication(data: Record<string, string>) {
 
   return { success: true, message: "Application submitted successfully" };
 }
+
+export const updateQuestions = async (questions: Question[]) => {
+  const session = await auth();
+
+  if (!session?.user.isAdmin) return { success: false };
+
+  try {
+    for (const question of questions) {
+      await prisma.whitelistQuestion.update({
+        where: { id: question.id },
+        data: {
+          question: question.question,
+          placeholder: question.placeholder,
+          required: question.required,
+        },
+      });
+    }
+    return { success: true };
+  } catch (error) {
+    console.error("Failed to update questions:", error);
+    return { success: false };
+  }
+};
 
 export async function getWhitelistQuestions() {
   try {
