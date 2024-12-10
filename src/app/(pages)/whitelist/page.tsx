@@ -5,6 +5,7 @@ import { z } from "zod";
 import Button from "@/components/ui/button";
 import { mockQuestions } from "@/lib/mock";
 import { Textarea } from "@/components/ui/textarea";
+import { createWhitelistApplication } from "@/lib/actions";
 
 const createSchema = () => {
   const schemaObj: Record<string, any> = {};
@@ -19,11 +20,12 @@ const createSchema = () => {
 const WhitelistForm = () => {
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [message, setMessage] = useState<{ text: string; success: boolean } | null>(null);
 
   const sortedQuestions = mockQuestions.sort((a, b) => (a.required === b.required ? 0 : a.required ? -1 : 1));
   const schema = createSchema();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     const result = schema.safeParse(answers);
@@ -38,7 +40,8 @@ const WhitelistForm = () => {
     }
 
     setErrors({});
-    console.log("Validated answers:", result.data);
+    const response = await createWhitelistApplication(result.data);
+    setMessage({ text: response.message, success: response.success });
   };
 
   const handleChange = (question: string, value: string) => {
@@ -48,6 +51,10 @@ const WhitelistForm = () => {
   return (
     <div className="px-4 py-6">
       <h1 className="mb-6 text-3xl font-bold">Whitelist Application</h1>
+
+      {message && (
+        <p className={`mb-4 text-lg ${message.success ? "text-green-500" : "text-red-500"}`}>{message.text}</p>
+      )}
 
       <form onSubmit={handleSubmit} className="space-y-6">
         {sortedQuestions.map((question) => {

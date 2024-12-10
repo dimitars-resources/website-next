@@ -25,7 +25,7 @@ model WhitelistQuestion {
 
 model WhitelistApplication {
   id        String   @id @default(cuid())
-  applicant String   @unique
+  applicant String
   status    Status   @default(pending)
   answers   Json
   createdAt DateTime @default(now())
