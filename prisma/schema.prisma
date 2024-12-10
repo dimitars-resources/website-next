@@ -16,7 +16,7 @@ datasource db {
 model WhitelistQuestion {
   id          String   @id @default(cuid())
   question    String
-  placeholder String
+  placeholder String   @default("")
   required    Boolean  @default(false)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
