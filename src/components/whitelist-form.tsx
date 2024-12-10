@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { z } from "zod";
 import Button from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { createWhitelistApplication, updateQuestions } from "@/lib/actions";
+import { createWhitelistApplication, getWhitelistQuestions, updateQuestions } from "@/lib/actions";
 import { Question } from "@/lib/types";
 import { Switch } from "./ui/switch";
 import { Checkbox } from "./ui/checkbox";
@@ -41,6 +41,7 @@ const WhitelistForm: React.FC<WhitelistFormProps> = ({ questions, isAdmin }) => 
 
     if (editMode) {
       const response = await updateQuestions(editableQuestions);
+      setEditableQuestions(await getWhitelistQuestions());
       setEditMode(false);
       setMessage({
         text: response.success ? "Questions successfully updated." : "Failed to update questions.",
