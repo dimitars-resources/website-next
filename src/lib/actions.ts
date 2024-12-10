@@ -20,7 +20,7 @@ export async function createWhitelistApplication(data: Record<string, string>) {
 
   if (!session?.user) return { success: false, message: "User not authenticated" };
 
-  const application = await prisma.whitelistApplication.findUnique({
+  const application = await prisma.whitelistApplication.findFirst({
     where: { applicant: session.user.id, status: "pending" },
   });
 
@@ -34,6 +34,19 @@ export async function createWhitelistApplication(data: Record<string, string>) {
   });
 
   return { success: true, message: "Application submitted successfully" };
+}
+
+export async function getWhitelistQuestions() {
+  try {
+    const questions = await prisma.whitelistQuestion.findMany({
+      orderBy: { createdAt: "asc" },
+    });
+
+    return questions.sort((a, b) => (a.required === b.required ? 0 : a.required ? -1 : 1));
+  } catch (error) {
+    console.error("Error fetching questions:", error);
+    return [];
+  }
 }
 
 export async function signOutAction() {

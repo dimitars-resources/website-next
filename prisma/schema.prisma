@@ -14,11 +14,12 @@ datasource db {
 }
 
 model WhitelistQuestion {
-  id        String   @id @default(cuid())
-  question  String
-  required  Boolean  @default(false)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id          String   @id @default(cuid())
+  question    String
+  placeholder String
+  required    Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 
   @@map("whitelist_questions")
 }
