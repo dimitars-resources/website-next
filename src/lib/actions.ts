@@ -43,16 +43,48 @@ export const updateQuestions = async (questions: Question[]) => {
   if (!session?.user.isAdmin) return { success: false };
 
   try {
-    for (const question of questions) {
-      await prisma.whitelistQuestion.update({
-        where: { id: question.id },
+    const existingQuestions = await prisma.whitelistQuestion.findMany({
+      select: { id: true },
+    });
+    const existingIds = new Set(existingQuestions.map((q) => q.id));
+
+    const newQuestions = questions.filter((q) => q.id.startsWith("new-"));
+    const existingQuestionsToUpdate = questions.filter((q) => !q.id.startsWith("new-"));
+
+    for (const question of existingQuestionsToUpdate) {
+      if (existingIds.has(question.id)) {
+        if (!question.question && !question.placeholder) {
+          await prisma.whitelistQuestion.delete({ where: { id: question.id } });
+          continue;
+        }
+        await prisma.whitelistQuestion.update({
+          where: { id: question.id },
+          data: {
+            question: question.question,
+            placeholder: question.placeholder,
+            required: question.required,
+          },
+        });
+      }
+    }
+
+    for (const newQuestion of newQuestions) {
+      if (!newQuestion.question) continue;
+      await prisma.whitelistQuestion.create({
         data: {
-          question: question.question,
-          placeholder: question.placeholder,
-          required: question.required,
+          question: newQuestion.question,
+          placeholder: newQuestion.placeholder,
+          required: newQuestion.required,
         },
       });
     }
+
+    const updatedIds = new Set(questions.map((q) => q.id));
+    const toDeleteIds = Array.from(existingIds).filter((id) => !updatedIds.has(id));
+    await prisma.whitelistQuestion.deleteMany({
+      where: { id: { in: toDeleteIds } },
+    });
+
     return { success: true };
   } catch (error) {
     console.error("Failed to update questions:", error);

@@ -78,6 +78,20 @@ const WhitelistForm: React.FC<WhitelistFormProps> = ({ questions, isAdmin }) => 
     setEditableQuestions((prevQuestions) => prevQuestions.map((q) => (q.id === id ? { ...q, placeholder: value } : q)));
   };
 
+  const handleRemoveQuestion = (id: string) => {
+    setEditableQuestions((prevQuestions) => prevQuestions.filter((q) => q.id !== id));
+  };
+
+  const handleAddQuestion = () => {
+    const newQuestion: Question = {
+      id: `new-${Date.now()}`, // Temporary ID until saved in the backend
+      question: "",
+      placeholder: "",
+      required: false,
+    };
+    setEditableQuestions((prevQuestions) => [newQuestion, ...prevQuestions]);
+  };
+
   const handleEditMode = () => {
     setEditMode((prev) => !prev);
   };
@@ -99,6 +113,14 @@ const WhitelistForm: React.FC<WhitelistFormProps> = ({ questions, isAdmin }) => 
       )}
 
       <form onSubmit={handleSubmit} className="space-y-6">
+        {editMode && (
+          <div className="space-y-2">
+            <Button type="button" intent="ghost" onClick={handleAddQuestion} className="p-2 text-blue-500">
+              Add New Question
+            </Button>
+          </div>
+        )}
+
         {editableQuestions.map((question) => (
           <div key={question.id} className="space-y-2">
             <div className="flex items-center space-x-2">
@@ -131,6 +153,15 @@ const WhitelistForm: React.FC<WhitelistFormProps> = ({ questions, isAdmin }) => 
                     }
                   />
                   <span className="text-lg">Required</span>
+
+                  <Button
+                    type="button"
+                    intent="ghost"
+                    onClick={() => handleRemoveQuestion(question.id)}
+                    className="p-2 text-red-500"
+                  >
+                    Remove
+                  </Button>
                 </div>
               )}
             </div>
