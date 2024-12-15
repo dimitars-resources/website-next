@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { auth } from "@/lib/auth";
 import UserProfile from "../user-profile";
+import { getTranslations } from "next-intl/server";
 
 const tabs = [
   { name: "Home", href: "/" },
@@ -11,6 +12,7 @@ const tabs = [
 
 const Header = async () => {
   const session = await auth();
+  const t = await getTranslations("Tabs");
 
   const hasPermission = (tab: (typeof tabs)[0]) => {
     if (tab.memberOnly && !session?.user) {
@@ -32,7 +34,7 @@ const Header = async () => {
             if (hasPermission(tab)) return null;
             return (
               <Link key={tab.name} href={tab.href}>
-                {tab.name}
+                {t(tab.name)}
               </Link>
             );
           })}

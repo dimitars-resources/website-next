@@ -1,0 +1,28 @@
+{
+  "Tabs": {
+    "Home": "Home",
+    "About": "About",
+    "Whitelist": "Whitelist",
+    "Dashboard": "Dashboard"
+  },
+  "HomePage": {
+    "description": "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Corrupti, earum adipisci. Nulla, labore veniam ratione cumque maiores eaque rerum totam reiciendis saepe, repellat excepturi dignissimos omnis expedita dicta reprehenderit laborum.",
+    "signIn": "Apply Now"
+  },
+  "WhitelistPage": {
+    "title": "Whitelist Application",
+    "editMode": "Edit Mode",
+    "addQuestion": "Add New Question",
+    "required": "Required",
+    "remove": "Remove",
+    "save": "Save Changes",
+    "submit": "Submit",
+    "filedRequired": "This field is required.",
+    "notAuthenticated": "User not authenticated!",
+    "alreadyExists": "Application already exists!",
+    "applicationSubmitted": "Application submitted successfully!",
+    "userNotAdmin": "User is not an admin!",
+    "successfullyUpdated": "Questions successfully updated!",
+    "failedToUpdate": "Failed to update questions!"
+  }
+}

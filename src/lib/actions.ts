@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 import { auth, signIn, signOut } from "./auth";
 import prisma from "./db";
 import { Question } from "./types";
+import { getTranslations } from "next-intl/server";
 
 export async function signInAction() {
   const session = await auth();
@@ -17,15 +18,17 @@ export async function signInAction() {
 }
 
 export async function createWhitelistApplication(data: Record<string, string>) {
+  const t = await getTranslations("WhitelistPage");
+
   const session = await auth();
 
-  if (!session?.user) return { success: false, message: "User not authenticated" };
+  if (!session?.user) return { success: false, message: t("notAuthenticated") };
 
   const application = await prisma.whitelistApplication.findFirst({
     where: { applicant: session.user.id, status: "pending" },
   });
 
-  if (application) return { success: false, message: "Application already exists" };
+  if (application) return { success: false, message: t("alreadyExists") };
 
   await prisma.whitelistApplication.create({
     data: {
@@ -34,13 +37,15 @@ export async function createWhitelistApplication(data: Record<string, string>) {
     },
   });
 
-  return { success: true, message: "Application submitted successfully" };
+  return { success: true, message: t("applicationSubmitted") };
 }
 
 export const updateQuestions = async (questions: Question[]) => {
+  const t = await getTranslations("WhitelistPage");
+
   const session = await auth();
 
-  if (!session?.user.isAdmin) return { success: false };
+  if (!session?.user.isAdmin) return { success: false, message: t("userNotAdmin") };
 
   try {
     const existingQuestions = await prisma.whitelistQuestion.findMany({
@@ -85,10 +90,9 @@ export const updateQuestions = async (questions: Question[]) => {
       where: { id: { in: toDeleteIds } },
     });
 
-    return { success: true };
+    return { success: true, message: t("successfullyUpdated") };
   } catch (error) {
-    console.error("Failed to update questions:", error);
-    return { success: false };
+    return { success: false, message: t("failedToUpdate") };
   }
 };
 

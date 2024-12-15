@@ -9,6 +9,7 @@ import { Question } from "@/lib/types";
 import { Switch } from "./ui/switch";
 import { Checkbox } from "./ui/checkbox";
 import { cn } from "@/lib/utils";
+import { useTranslations } from "next-intl";
 
 interface WhitelistFormProps {
   questions: Question[];
@@ -21,6 +22,7 @@ const WhitelistForm: React.FC<WhitelistFormProps> = ({ questions, isAdmin }) => 
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [message, setMessage] = useState<{ text: string; success: boolean } | null>(null);
   const [editMode, setEditMode] = useState(false);
+  const t = useTranslations("WhitelistPage");
 
   useEffect(() => {
     setEditableQuestions(questions);
@@ -30,7 +32,7 @@ const WhitelistForm: React.FC<WhitelistFormProps> = ({ questions, isAdmin }) => 
     const schemaObj: Record<string, any> = {};
     editableQuestions.forEach((question) => {
       schemaObj[question.question] = question.required
-        ? z.string().min(1, { message: "This field is required." })
+        ? z.string().min(1, { message: t("filedRequired") })
         : z.string().optional();
     });
     return z.object(schemaObj);
@@ -43,10 +45,7 @@ const WhitelistForm: React.FC<WhitelistFormProps> = ({ questions, isAdmin }) => 
       const response = await updateQuestions(editableQuestions);
       setEditableQuestions(await getWhitelistQuestions());
       setEditMode(false);
-      setMessage({
-        text: response.success ? "Questions successfully updated." : "Failed to update questions.",
-        success: response.success,
-      });
+      setMessage({ text: response.message, success: response.success });
     } else {
       const schema = createSchema();
       const result = schema.safeParse(answers);
@@ -99,11 +98,11 @@ const WhitelistForm: React.FC<WhitelistFormProps> = ({ questions, isAdmin }) => 
   return (
     <div className="px-4 py-6">
       <div className="flex justify-between">
-        <h1 className="mb-6 text-3xl font-bold">Whitelist Application</h1>
+        <h1 className="mb-6 text-3xl font-bold">{t("title")}</h1>
         {isAdmin && (
           <div className="flex items-center space-x-2">
             <Switch checked={editMode} onCheckedChange={handleEditMode} />
-            <span className="text-lg">Edit Mode</span>
+            <span className="text-lg">{t("editMode")}</span>
           </div>
         )}
       </div>
@@ -116,7 +115,7 @@ const WhitelistForm: React.FC<WhitelistFormProps> = ({ questions, isAdmin }) => 
         {editMode && (
           <div className="space-y-2">
             <Button type="button" intent="ghost" onClick={handleAddQuestion} className="p-2 text-blue-500">
-              Add New Question
+              {t("addQuestion")}
             </Button>
           </div>
         )}
@@ -152,7 +151,7 @@ const WhitelistForm: React.FC<WhitelistFormProps> = ({ questions, isAdmin }) => 
                       )
                     }
                   />
-                  <span className="text-lg">Required</span>
+                  <span className="text-lg">{t("required")}</span>
 
                   <Button
                     type="button"
@@ -160,7 +159,7 @@ const WhitelistForm: React.FC<WhitelistFormProps> = ({ questions, isAdmin }) => 
                     onClick={() => handleRemoveQuestion(question.id)}
                     className="p-2 text-red-500"
                   >
-                    Remove
+                    {t("remove")}
                   </Button>
                 </div>
               )}
@@ -195,7 +194,7 @@ const WhitelistForm: React.FC<WhitelistFormProps> = ({ questions, isAdmin }) => 
 
         <div className="flex justify-end pt-10">
           <Button type="submit" rounded="full">
-            {editMode ? "Save Changes" : "Submit"}
+            {editMode ? t("save") : t("submit")}
           </Button>
         </div>
       </form>
