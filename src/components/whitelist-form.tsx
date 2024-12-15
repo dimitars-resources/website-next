@@ -43,7 +43,12 @@ const WhitelistForm: React.FC<WhitelistFormProps> = ({ questions, isAdmin }) => 
 
     if (editMode) {
       const response = await updateQuestions(editableQuestions);
-      setEditableQuestions(await getWhitelistQuestions());
+      const updateResponse = await getWhitelistQuestions();
+      if (updateResponse.status === "authenticated") {
+        if (updateResponse.questions) {
+          setEditableQuestions(updateResponse.questions);
+        }
+      }
       setEditMode(false);
       setMessage({ text: response.message, success: response.success });
     } else {

@@ -5,6 +5,7 @@ import { auth, signIn, signOut } from "./auth";
 import prisma from "./db";
 import { Question } from "./types";
 import { getTranslations } from "next-intl/server";
+import { Prisma } from "@prisma/client";
 
 export async function signInAction() {
   const session = await auth();
@@ -98,14 +99,37 @@ export const updateQuestions = async (questions: Question[]) => {
 
 export async function getWhitelistQuestions() {
   try {
+    const session = await auth();
+    const userId = session?.user?.id;
+
+    if (!userId) {
+      return { status: "error" };
+    }
+
+    const application = await prisma.whitelistApplication.findFirst({
+      where: { applicant: userId, status: "pending" },
+      select: { status: true, createdAt: true, updatedAt: true },
+    });
+
+    if (application) {
+      return {
+        status: "applied",
+        application: application as Prisma.WhitelistApplicationCreateInput,
+      };
+    }
+
     const questions = await prisma.whitelistQuestion.findMany({
       orderBy: { createdAt: "asc" },
     });
 
-    return questions.sort((a, b) => (a.required === b.required ? 0 : a.required ? -1 : 1));
+    return {
+      status: "canApply",
+      questions: questions.sort((a, b) => (a.required === b.required ? 0 : a.required ? -1 : 1)),
+      isAdmin: session.user.isAdmin,
+    };
   } catch (error) {
-    console.error("Error fetching questions:", error);
-    return [];
+    console.error("Error fetching data:", error);
+    return { status: "error" };
   }
 }
 

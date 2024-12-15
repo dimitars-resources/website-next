@@ -49,7 +49,7 @@ export default async function RootLayout({
               <div className="mx-auto h-full w-full max-w-7xl">{children}</div>
             </div>
           </main>
-          <Footer />
+          {/* <Footer /> */}
         </NextIntlClientProvider>
       </body>
     </html>

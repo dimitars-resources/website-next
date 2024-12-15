@@ -5,7 +5,6 @@ import { getTranslations } from "next-intl/server";
 
 const tabs = [
   { name: "Home", href: "/" },
-  { name: "About", href: "/about" },
   { name: "Whitelist", href: "/whitelist", memberOnly: true },
   { name: "Dashboard", href: "/dashboard", adminOnly: true },
 ];
