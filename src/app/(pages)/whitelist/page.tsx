@@ -1,7 +1,6 @@
 import WhitelistForm from "@/components/whitelist-form";
 import WhitelistStatusCard from "@/components/whitelist-status";
 import { getWhitelistQuestions } from "@/lib/actions";
-import { auth } from "@/lib/auth";
 
 const WhitelistPage = async () => {
   const data = await getWhitelistQuestions();
